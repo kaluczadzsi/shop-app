@@ -1,0 +1,24 @@
+::-webkit-scrollbar {
+  width: 10px;
+  height: 100%;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7c8cc;
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100vw;
+}
+
+.MuiCardMedia-img {
+  width: 250px;
+  height: 250px;
+}
+
+@media screen and (min-width: 75rem) and (max-width: 87.5rem) {
+  .MuiStack-root .css-pr92s4-MuiStack-root {
+    height: 25rem;
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "users": [
+    {
+      "email": "tony@gmail.com",
+      "password": "$2a$10$MXgSFNUzhpO70hHC.dYOYetF8T0QadONOVVpD2AUunhsHsdbPUUVG",
+      "username": "Tony",
+      "lang": "en",
+      "id": 1,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwiaWF0IjoxNzE3MTU4NTMyLCJleHAiOjE3MTcxNjIxMzIsInN1YiI6IjEifQ.dvKJMeb_hIKhM5JNRjfW9oEnaoD95Em07eNGMlnJG7k"
+    },
+    {
+      "email": "sasuke@gmail.com",
+      "password": "$2a$10$MXgSFNUzhpO70hHC.dYOYetF8T0QadONOVVpD2AUunhsHsdbPUUVG",
+      "username": "Sasuke",
+      "lang": "en",
+      "id": 2,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwiaWF0IjoxNzE3MTU4NTMyLCJleHAiOjE3MTcxNjIxMzIsInN1YiI6IjEifQ.dvKJMeb_hIKhM5JNRjfW9oEnaoD95Em07eNGMlnJG7k"
+    }
+  ],
+  "login": [],
+  "products": [
+    {
+      "id": "1",
+      "category": "household",
+      "title": "brush",
+      "image": "/products/brush.jpg",
+      "description": "The perfect choice for anyone looking to add a splash of color to their outdoor space. Whether you're sprucing up your garden or giving your property a fresh new look, our fence paint offers exceptional coverage and long-lasting durability.",
+      "isonsale": true,
+      "price": 125
+    },
+    {
+      "id": "2",
+      "category": "car",
+      "title": "wrench",
+      "image": "/products/wrench.jpg",
+      "description": "Get a grip on your DIY projects with our high-quality wrench! Engineered for performance and durability, our wrenches are the perfect companion for any task, big or small. From tightening bolts to assembling furniture, our versatile wrenches make every job a breeze.",
+      "price": 27
+    },
+    {
+      "id": "3",
+      "category": "pc",
+      "title": "office pc",
+      "image": "/products/pc.jpg",
+      "description": "Boost your productivity with our high-performance office PC. Engineered for efficiency and reliability, our office PC is the perfect solution for tackling your daily workload with ease.",
+      "price": 175
+    },
+    {
+      "id": "4",
+      "category": "furniture",
+      "title": "chair",
+      "image": "/products/chair.jpg",
+      "description": "Bring style and comfort into your home with our modern chair. Crafted with precision and attention to detail, our chair combines sleek design with plush cushioning to create the perfect seating experience. Whether you're enjoying a cozy evening by the fireplace or hosting guests for dinner, our chair provides the ideal balance of elegance and relaxation.",
+      "isonsale": true,
+      "price": 97
+    },
+    {
+      "id": "5",
+      "category": "smartphone",
+      "title": "xiaomi 10s",
+      "image": "/products/smartphone.jpg",
+      "description": "Discover the ultimate in mobile technology with our cutting-edge smartphone. Engineered for performance and designed for style, our smartphone redefines the way you connect, work, and play on the go.",
+      "price": 199
+    },
+    {
+      "id": "6",
+      "category": "sport",
+      "title": "surfboard",
+      "image": "/products/surfboard.jpg",
+      "description": "Ride the waves in style with our premium surfboard. Designed for both beginners and seasoned surfers, our surfboard offers the perfect blend of performance and stability.",
+      "price": 315
+    },
+    {
+      "id": "7",
+      "category": "tv",
+      "title": "samsung tv",
+      "image": "/products/television.jpg",
+      "description": "Elevate your home entertainment experience with the Samsung TV. Immerse yourself in stunning visuals and crystal-clear sound with our state-of-the-art television.",
+      "isonsale": true,
+      "price": 499
+    },
+    {
+      "id": "8",
+      "category": "gaming",
+      "title": "xbox controller",
+      "image": "/products/xboxcontroller.jpg",
+      "description": "Take control of your gaming experience with the Xbox controller. Designed for precision and comfort, our controller offers responsive gameplay and intuitive controls, putting you in the center of the action.",
+      "price": 84
+    },
+    {
+      "id": "9",
+      "category": "gaming",
+      "title": "playstation controller",
+      "image": "/products/pscontroller.jpg",
+      "description": "Take control of your gaming experience with the PlayStation controller. Designed for precision and comfort, our controller offers responsive gameplay and intuitive controls, putting you in the center of the action.",
+      "price": 84
+    }
+  ],
+  "cartItems": [
+    {
+      "id": "2",
+      "category": "car",
+      "title": "wrench",
+      "image": "/products/wrench.jpg",
+      "description": "Get a grip on your DIY projects with our high-quality wrench! Engineered for performance and durability, our wrenches are the perfect companion for any task, big or small. From tightening bolts to assembling furniture, our versatile wrenches make every job a breeze.",
+      "price": 27,
+      "quantity": 1
+    }
+  ]
+}
