@@ -28,7 +28,7 @@ export const SummaryBar = () => {
       justifyContent='space-between'
       alignItems='center'
     >
-      <Button onClick={() => setIsOpen(true)} sx={{ color: 'teritary.light' }}>
+      <Button onClick={() => setIsOpen(true)} sx={{ color: 'secondary.main' }}>
         {t('clearCartText')}
       </Button>
       <Stack direction='row' gap={1}>

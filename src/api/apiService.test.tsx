@@ -1,56 +1,55 @@
-import { apiService } from '@/api/apiService'
+import { mockedProducts } from '@/mocks/mockedProducts'
+import { axiosInstance } from './axiosInstance'
 
-const mockedGet = jest.fn()
-const mockedPost = jest.fn()
-const mockedPatch = jest.fn()
-const mockedDelete = jest.fn()
-
-jest.mock('./apiService', () => ({
-  apiService: () => ({
-    getRequest: mockedGet,
-    postRequest: mockedPost,
-    patchRequest: mockedPatch,
-    deleteRequest: mockedDelete
-  })
-}))
-
+jest.mock('@/api/axiosInstance')
 describe('apiService tests', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks()
   })
 
   test('getRequest test', async () => {
-    mockedGet.mockResolvedValueOnce('mock-get-result')
-    const result = await apiService().getRequest<any>('mock-url')
+    ;(axiosInstance as jest.MockedFunction<typeof axiosInstance>).mockResolvedValue(mockedProducts)
 
-    expect(mockedGet).toHaveBeenCalledWith('mock-url')
-    expect(result).toEqual('mock-get-result')
+    const response = await axiosInstance('/cartItems')
+
+    expect(axiosInstance).toHaveBeenCalledWith('/cartItems')
+    expect(response).toEqual(mockedProducts)
   })
 
   test('postRequest test', async () => {
-    mockedPost.mockResolvedValueOnce('mock-post-result')
-    const postData = { key: 'value' }
-    const result = await apiService().postRequest<any>('mock-url', postData)
+    const postData = { id: 1, name: 'Product' }
 
-    expect(mockedPost).toHaveBeenCalledWith('mock-url', postData)
-    expect(result).toEqual('mock-post-result')
+    ;(axiosInstance.post as jest.MockedFunction<typeof axiosInstance.post>).mockResolvedValue({
+      data: [...mockedProducts, postData]
+    })
+
+    const response = await axiosInstance.post('/cartItems', postData)
+
+    expect(axiosInstance.post).toHaveBeenCalledWith('/cartItems', postData)
+    expect(response.data).toEqual([...mockedProducts, postData])
   })
 
-  test('patchRequest test', async () => {
-    mockedPatch.mockResolvedValueOnce('mock-patch-result')
-    const patchData = { key: 'updated-value' }
-    const result = await apiService().patchRequest<any>('mock-url', patchData)
+  test('putRequest test', async () => {
+    const putData = { id: 1, name: 'Updated Product' }
 
-    expect(mockedPatch).toHaveBeenCalledWith('mock-url', patchData)
-    expect(result).toEqual('mock-patch-result')
+    ;(axiosInstance.put as jest.MockedFunction<typeof axiosInstance.put>).mockResolvedValue({
+      data: putData
+    })
+
+    const response = await axiosInstance.put('/cartItems/1', putData)
+
+    expect(axiosInstance.put).toHaveBeenCalledWith('/cartItems/1', putData)
+    expect(response.data).toEqual(putData)
   })
 
   test('deleteRequest test', async () => {
-    mockedDelete.mockResolvedValueOnce('mock-delete-result')
-    const deleteData = { key: 'delete-value' }
-    const result = await apiService().deleteRequest<any>('mock-url', deleteData)
+    ;(axiosInstance.delete as jest.MockedFunction<typeof axiosInstance.delete>).mockResolvedValue({
+      data: { success: true }
+    })
 
-    expect(mockedDelete).toHaveBeenCalledWith('mock-url', deleteData)
-    expect(result).toEqual('mock-delete-result')
+    const response = await axiosInstance.delete('/cartItems/1')
+
+    expect(axiosInstance.delete).toHaveBeenCalledWith('/cartItems/1')
+    expect(response.data).toEqual({ success: true })
   })
 })

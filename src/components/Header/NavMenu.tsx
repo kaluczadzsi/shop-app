@@ -46,7 +46,7 @@ export const NavMenu = ({ handleClick, anchorEl, handleClose, isOpen }: NavMenuP
         onClick={handleClick}
         aria-label='btn-account'
       >
-        <Tooltip title='Profile'>
+        <Tooltip title={t('navMenuProfileText')}>
           <AccountCircleIcon sx={{ color: 'white', fontSize: '1.75rem' }} />
         </Tooltip>
       </Button>

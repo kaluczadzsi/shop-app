@@ -2,12 +2,13 @@ import { addCartItemThunk } from '@/features/cart/addCartItemThunk'
 import { fetchProductsThunk } from '@/features/product/fetchProductsThunk'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { capitalizeAfterFirstWord } from '@/utils/capitalizeAfterFirstWord'
-import { Button, Card, CardContent, CardMedia, Stack, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardMedia, Stack, Tooltip, Typography } from '@mui/material'
 import { green, red } from '@mui/material/colors'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DiscountStrip } from '../Slider/Slider.styled'
 import { ProductProps } from './types'
+import { ProductRating } from '../ProductRating/ProductRating'
 
 export const Product = ({ title, image, price, isonsale, id }: ProductProps) => {
   const { user } = useAppSelector((state) => state.currentUser)
@@ -38,7 +39,7 @@ export const Product = ({ title, image, price, isonsale, id }: ProductProps) => 
     <Card sx={{ position: 'relative' }}>
       {isonsale && <DiscountStrip>{t('discount')}</DiscountStrip>}
       <CardMedia component='img' alt={`Image of ${t(`${title.toLowerCase()}`)}`} image={image} height={300} />
-      <Stack justifyContent='space-between' height='20rem'>
+      <Stack justifyContent='space-between' height='21rem'>
         <CardContent>
           <Typography gutterBottom variant='h5' component='div'>
             {t(`${updatedTitle}`)}
@@ -47,11 +48,20 @@ export const Product = ({ title, image, price, isonsale, id }: ProductProps) => 
             {t(`${updatedTitle}Description`)}
           </Typography>
         </CardContent>
-
+        <ProductRating productId={id} />
         <Stack alignItems='center' justifyContent='space-between' direction='row' padding='8px 16px'>
-          <Button onClick={onHandleAddToBasket} size='small' sx={(theme) => ({ color: theme.palette.secondary.dark })}>
-            {t('addToBasketText')}
-          </Button>
+          <Tooltip title={!user ? t('disabledPurchaseText') : ''} placement='top-start'>
+            <Box>
+              <Button
+                disabled={!user}
+                onClick={onHandleAddToBasket}
+                size='small'
+                sx={(theme) => ({ color: theme.palette.secondary.dark })}
+              >
+                {t('addToBasketText')}
+              </Button>
+            </Box>
+          </Tooltip>
 
           {isonsale ? (
             <Stack direction='row' alignItems='center' gap={2}>

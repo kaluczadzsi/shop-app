@@ -1,20 +1,39 @@
 {
   "users": [
     {
-      "email": "tony@gmail.com",
-      "password": "$2a$10$MXgSFNUzhpO70hHC.dYOYetF8T0QadONOVVpD2AUunhsHsdbPUUVG",
-      "username": "Tony",
+      "email": "menta@gmail.com",
+      "password": "$2a$10$zyO9MAOC5JyUdrxQBAvezel66jd1AxDBil9SmVh.Ku1CXTNwhtUN6",
+      "username": "Menta",
       "lang": "en",
       "id": 1,
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwiaWF0IjoxNzE3MTU4NTMyLCJleHAiOjE3MTcxNjIxMzIsInN1YiI6IjEifQ.dvKJMeb_hIKhM5JNRjfW9oEnaoD95Em07eNGMlnJG7k"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1lbnRhQGdtYWlsLmNvbSIsImlhdCI6MTcyMDAwMzcyNiwiZXhwIjoxNzIwMDA3MzI2LCJzdWIiOiIxIn0.zDcZ_v2MEQxYqXntDjplwaD7kRd8HMTLRnfBSpqAayI",
+      "ratings": {
+        "3": 1
+      }
     },
     {
-      "email": "sasuke@gmail.com",
-      "password": "$2a$10$MXgSFNUzhpO70hHC.dYOYetF8T0QadONOVVpD2AUunhsHsdbPUUVG",
-      "username": "Sasuke",
+      "email": "tony@gmail.com",
+      "password": "$2a$10$8FEU1cQJQKgS1lu3BxxT4Od6JeH8oZCySRc3AtF2q.0fl/eOgPDk6",
+      "username": "Tony",
       "lang": "en",
       "id": 2,
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwiaWF0IjoxNzE3MTU4NTMyLCJleHAiOjE3MTcxNjIxMzIsInN1YiI6IjEifQ.dvKJMeb_hIKhM5JNRjfW9oEnaoD95Em07eNGMlnJG7k"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwiaWF0IjoxNzIwMDAzNzA1LCJleHAiOjE3MjAwMDczMDUsInN1YiI6IjIifQ.Tn5fHh0qacNR1rJfauvpy6C9C3tRPOllbBVeSRoJ1sY",
+      "ratings": {
+        "3": 5
+      }
+    },
+    {
+      "email": "mata@gmail.com",
+      "password": "$2a$10$wCNG5pKCTQOUDjxYhap20.InPfoBEwcYXBG8QPvqsq0S5cV/XUCnq",
+      "username": "Mata",
+      "lang": "en",
+      "id": 3,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdGFAZ21haWwuY29tIiwiaWF0IjoxNzIwMDE0NTUwLCJleHAiOjE3MjAwMTgxNTAsInN1YiI6IjMifQ.KrMA76NcI1nARLpC8JwGc9g6yqWr7KvAWU-HOoHe-qg",
+      "ratings": {
+        "1": 0,
+        "2": 0,
+        "3": 0
+      }
     }
   ],
   "login": [],
@@ -97,13 +116,22 @@
   ],
   "cartItems": [
     {
+      "id": "3",
+      "category": "pc",
+      "title": "office pc",
+      "image": "/products/pc.jpg",
+      "description": "Boost your productivity with our high-performance office PC. Engineered for efficiency and reliability, our office PC is the perfect solution for tackling your daily workload with ease.",
+      "price": 175,
+      "quantity": 5
+    },
+    {
       "id": "2",
       "category": "car",
       "title": "wrench",
       "image": "/products/wrench.jpg",
       "description": "Get a grip on your DIY projects with our high-quality wrench! Engineered for performance and durability, our wrenches are the perfect companion for any task, big or small. From tightening bolts to assembling furniture, our versatile wrenches make every job a breeze.",
       "price": 27,
-      "quantity": 1
+      "quantity": 2
     }
   ]
 }

@@ -19,6 +19,10 @@ export const Profile = () => {
     dispatch(clearCurrentUser())
   }
 
+  const handleGoHome = () => {
+    navigate(ROUTES.root)
+  }
+
   return (
     <Box flexGrow={1} p={2}>
       <ProfileBox>
@@ -31,7 +35,11 @@ export const Profile = () => {
             <Typography sx={{ mt: 1, mb: 2 }}>{user?.email}</Typography>
           </Box>
 
-          <CustomButton sx={{ maxWidth: '50%', margin: 'auto' }} onClick={handleLogout}>
+          <CustomButton sx={{ width: '50%', margin: 'auto' }} onClick={handleGoHome}>
+            {t('homeText')}
+          </CustomButton>
+
+          <CustomButton sx={{ width: '50%', margin: 'auto' }} onClick={handleLogout}>
             {t('logoutText')}
           </CustomButton>
         </Box>

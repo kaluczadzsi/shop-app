@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { User } from '@/components/types'
-import { pendingHandler, fulfilledHandler, rejectedHandler } from '@/constants/sliceStateHandlers'
+import { fulfilledHandler, pendingHandler, rejectedHandler } from '@/constants/sliceStateHandlers'
 import { createSlice } from '@reduxjs/toolkit'
 import { postUserThunk } from './postUserThunk'
 import { CurrentUserState } from './types'
 import { updateUserLangThunk } from './updateUserLangThunk'
+import { patchUserThunk } from './patchUserThunk'
 
 const storedUser = localStorage.getItem('user')
 const initialUser: User | null = storedUser ? (JSON.parse(storedUser) as User) : null
@@ -37,6 +38,11 @@ export const currentUserSlice = createSlice({
       state.user = action.payload
     })
     builder.addCase(updateUserLangThunk.rejected, rejectedHandler)
+    builder.addCase(patchUserThunk.pending, pendingHandler)
+    builder.addCase(patchUserThunk.fulfilled, (state, action) => {
+      fulfilledHandler(state)
+      state.user = action.payload
+    })
   }
 })
 
