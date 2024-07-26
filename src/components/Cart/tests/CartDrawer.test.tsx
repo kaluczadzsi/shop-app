@@ -1,75 +1,104 @@
+import { deleteCartItemThunk } from '@/features/cart/deleteCartItemThunk'
+import { updateAmountThunk } from '@/features/cart/updateAmountThunk'
 import { store } from '@/store/store'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router'
 import { CartDrawer } from '../CartDrawer'
+
+const cartItems = [
+  {
+    id: 1,
+    title: 'item',
+    image: 'img',
+    description: 'description',
+    isonsale: false,
+    price: 200,
+    category: 'household',
+    quantity: 2
+  }
+]
+
+const mockedGetRequest = jest.fn()
+const mockedDeleteRequest = jest.fn()
+const dispatch = jest.fn()
+const deleteThunk = deleteCartItemThunk(1)
+const increaseThunk = updateAmountThunk({ id: 1, type: 'increase' })
+const decreaseThunk = updateAmountThunk({ id: 1, type: 'decrease' })
+
+jest.mock('@/api/apiService', () => ({
+  apiService: () => ({
+    getRequest: mockedGetRequest,
+    deleteRequest: mockedDeleteRequest
+  })
+}))
 
 const renderCartDrawer = () => {
   return render(
     <Provider store={store}>
       <Router>
-        <CartDrawer isOpen onClose={() => {}} cart={[]} isLoading={false} />
+        <CartDrawer isOpen onClose={() => {}} cart={cartItems} isLoading={false} />
       </Router>
     </Provider>
   )
 }
 
 describe('CartDrawer component tests', () => {
-  test('drawer has cart item if cartItems length bigger than 0', async () => {
-    const { cartItems } = store.getState().cart
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
-    if (cartItems?.length > 0) {
-      expect(screen.getByRole('listitem', { name: /cart item/i })).toBeInTheDocument()
-    }
+  test('drawer has cart item if cartItems length bigger than 0', async () => {
+    renderCartDrawer()
+    expect(screen.getByLabelText('cart-item')).toBeInTheDocument()
   })
 
   test('delete cart item works correctly', async () => {
     renderCartDrawer()
-    const deleteItemMock = jest.fn()
+    mockedGetRequest.mockResolvedValue(cartItems)
+    await deleteThunk(dispatch, () => {}, undefined)
+    const { calls } = dispatch.mock
+    const [pending, fulfilled] = calls
 
-    const { cartItems } = store.getState().cart
-
-    if (cartItems?.length > 0) {
-      expect(screen.getByRole('listitem', { name: /cart item/i })).toBeInTheDocument()
-      const deleteButton = screen.getByRole('svg')
-      fireEvent.click(deleteButton)
-      expect(deleteItemMock).toHaveBeenCalled()
-      expect(cartItems.length).toEqual(cartItems.length - 1)
-    }
+    expect(pending[0].type).toBe('cart/deleteCartItemThunk/pending')
+    expect(fulfilled[0].type).toBe('cart/deleteCartItemThunk/fulfilled')
   })
 
   test('+ button increases cart item amount correctly ', async () => {
     renderCartDrawer()
-    const increaseQuantityMock = jest.fn()
+    mockedGetRequest.mockResolvedValue(cartItems)
 
-    const { cartItems } = store.getState().cart
+    const increaseButton = screen.getByRole('button', { name: '+' })
+    userEvent.click(increaseButton)
 
-    if (cartItems?.length > 0) {
-      expect(screen.getByRole('listitem', { name: /cart item/i })).toBeInTheDocument()
-      const increaseButton = screen.getByRole('button', { name: '+' })
+    await increaseThunk(dispatch, () => {}, undefined)
+    const { calls } = dispatch.mock
+    const [pending] = calls
 
-      fireEvent.click(increaseButton)
-      expect(increaseQuantityMock).toHaveBeenCalled()
-
-      const amount = await screen.findByRole('span', { name: /quantity/i })
-      expect(amount.textContent).toBe(2)
-    }
+    expect(pending[0].type).toBe('cart/updateAmountThunk/pending')
+    expect(cartItems[0].quantity).toBe(3)
   })
 
   test('- button decreases cart item amount correctly ', async () => {
     renderCartDrawer()
-    const decreaseQuantityMock = jest.fn()
+    mockedGetRequest.mockResolvedValue(cartItems)
 
-    const { cartItems } = store.getState().cart
+    const decreaseButton = screen.getByRole('button', { name: '-' })
+    userEvent.click(decreaseButton)
 
-    if (cartItems?.length > 0) {
-      expect(screen.getByRole('listitem', { name: /cart item/i })).toBeInTheDocument()
-      const decreaseButton = screen.getByRole('button', { name: '-' })
+    await decreaseThunk(dispatch, () => {}, undefined)
+    const { calls } = dispatch.mock
+    const [pending] = calls
 
-      fireEvent.click(decreaseButton)
-      expect(decreaseQuantityMock).toHaveBeenCalled()
+    expect(pending[0].type).toBe('cart/updateAmountThunk/pending')
+    expect(cartItems[0].quantity).toBe(2)
+  })
 
-      expect(screen.getByRole('listitem', { name: /cart item/i })).not.toBeInTheDocument()
-    }
+  test('summary bar is rendered correctly ', async () => {
+    renderCartDrawer()
+
+    const summaryBar = screen.getByRole('list')
+    expect(summaryBar).toBeInTheDocument()
   })
 })

@@ -1,5 +1,6 @@
 import { store } from '@/store/store'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { Header } from '../Header'
@@ -20,14 +21,14 @@ describe('Header component tests', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument()
   })
 
-  test('theme toggler works correctly', () => {
+  test('theme toggler works correctly', async () => {
     renderHeader()
 
-    const initialTheme = store.getState().theme.theme
+    const initialTheme = 'light'
     expect(initialTheme).toBe('light')
 
     const themeToggleButton = screen.getByLabelText('theme-toggle-button')
-    fireEvent.click(themeToggleButton)
+    await userEvent.click(themeToggleButton)
 
     const newTheme = store.getState().theme.theme
     expect(newTheme).toBe('dark')

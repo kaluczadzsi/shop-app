@@ -80,6 +80,15 @@ export const ukraine = {
       }
     },
     confirm: 'Підтвердити',
-    deny: 'Відхилити'
+    deny: 'Відхилити',
+    changeProfilePicture: 'Змінити фото профілю',
+    changeUsername: "Змінити ім'я користувача",
+    enterNewUsername: "Введіть нове ім'я користувача (3 до 18 символів)",
+    profileNameDialogTitle: "Змінити ім'я користувача",
+    usernameLengthError: "Нове ім'я користувача повинно бути не менше 3 символів.",
+    usernameTooShort: "Ім'я користувача занадто коротке",
+    usernameTooLong: "Ім'я користувача занадто довге",
+    newUserName: "Нове ім'я користувача",
+    btnChange: 'Змінити'
   }
 }

@@ -1,9 +1,10 @@
 import { CustomButton } from '@/components/Components.styled'
+import { ProfileImage } from '@/components/ProfileImage/ProfileImage'
+import { ProfileNameDialog } from '@/components/ProfileNameDialog/ProfileNameDialog'
 import { ROUTES } from '@/constants'
 import { clearCurrentUser } from '@/features/currentUser/currentUserSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { Box, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { ProfileBox } from './styles'
@@ -26,12 +27,16 @@ export const Profile = () => {
   return (
     <Box flexGrow={1} p={2}>
       <ProfileBox>
-        <Box display='flex' flexDirection='column' gap={2}>
-          <AccountCircleIcon sx={{ fontSize: '6rem', margin: 'auto' }} />
+        <Stack flexDirection='column' alignItems='center' gap={2}>
+          <ProfileImage />
           <Box>
-            <Typography variant='h4'>
-              {t('welcomeText')} {user?.username}!
-            </Typography>
+            <Stack direction='row' justifyItems='center' alignItems='center'>
+              <Typography variant='h4'>
+                {t('welcomeText')} {user?.username}!
+              </Typography>
+              <ProfileNameDialog />
+            </Stack>
+
             <Typography sx={{ mt: 1, mb: 2 }}>{user?.email}</Typography>
           </Box>
 
@@ -42,7 +47,7 @@ export const Profile = () => {
           <CustomButton sx={{ width: '50%', margin: 'auto' }} onClick={handleLogout}>
             {t('logoutText')}
           </CustomButton>
-        </Box>
+        </Stack>
       </ProfileBox>
     </Box>
   )

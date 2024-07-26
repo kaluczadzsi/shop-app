@@ -1,7 +1,8 @@
 import { CATEGORIES } from '@/constants'
 import { getCurrentURL } from '@/utils/getCurrentURL'
 import '@testing-library/jest-dom'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Categories } from './Categories'
 
@@ -37,7 +38,7 @@ describe('Categories component tests', () => {
     renderCategories(onClickMock)
 
     const homeButton = screen.getByRole('button', { name: /home/i })
-    fireEvent.click(homeButton)
+    userEvent.click(homeButton)
     const urlAfterClick = getCurrentURL()
 
     expect(urlAfterClick).toEqual('http://localhost/')
@@ -52,14 +53,14 @@ describe('Categories component tests', () => {
     })
   })
 
-  test('each category navigates to its corresponding URL', () => {
+  test('each category navigates to its corresponding URL', async () => {
     renderCategories(onClickMock)
 
-    CATEGORIES.forEach((category) => {
+    CATEGORIES.forEach(async (category) => {
       const categoryElement = screen.getByRole('link', { name: new RegExp(category.label, 'i') })
-      fireEvent.click(categoryElement)
-      const urlAfterClick = getCurrentURL()
+      await userEvent.click(categoryElement)
 
+      const urlAfterClick = getCurrentURL()
       expect(urlAfterClick).toEqual(`http://localhost/categories/${category.label.toLowerCase()}`)
     })
   })
@@ -69,7 +70,7 @@ describe('Categories component tests', () => {
 
     CATEGORIES.forEach((category) => {
       const categoryElement = screen.getByRole('link', { name: new RegExp(category.label, 'i') })
-      fireEvent.click(categoryElement)
+      userEvent.click(categoryElement)
 
       expect(categoryElement).toHaveAttribute('href', `/categories/${category.label.toLowerCase()}`)
     })
@@ -80,7 +81,7 @@ describe('Categories component tests', () => {
 
     CATEGORIES.forEach((category) => {
       const categoryElement = screen.getByRole('link', { name: new RegExp(category.label, 'i') })
-      fireEvent.mouseEnter(categoryElement)
+      userEvent.hover(categoryElement)
 
       expect(categoryElement).toHaveStyle(`background: primary.light`)
       expect(categoryElement).toHaveStyle(`background: primary.main`)

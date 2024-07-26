@@ -25,3 +25,18 @@ export interface PostUserThunkArgs {
   user: User
   url?: string
 }
+
+export interface UpdateUsernameThunkProps {
+  user: User
+  username: string | null
+}
+
+export interface UpdateUserLangThunkProps {
+  user: User
+  lang: string
+}
+
+export interface UpdateUserImageThunkProps {
+  user: User
+  image: string | null
+}

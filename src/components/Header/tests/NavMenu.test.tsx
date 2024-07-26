@@ -1,6 +1,7 @@
 import { clearCurrentUser } from '@/features/currentUser/currentUserSlice'
 import { store } from '@/store/store'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { NavMenu } from '../NavMenu'
@@ -33,7 +34,7 @@ describe('NavMenu component tests', () => {
       const profile = screen.getByRole('menuitem', { name: /profile/i })
       expect(profile).toBeInTheDocument()
 
-      fireEvent.click(profile)
+      userEvent.click(profile)
       expect(window.location.pathname).toBe('/profile')
     }
   })
@@ -47,12 +48,12 @@ describe('NavMenu component tests', () => {
       const logout = screen.getByRole('menuitem', { name: /logout/i })
       expect(logout).toBeInTheDocument()
 
-      fireEvent.click(logout)
+      userEvent.click(logout)
       expect(window.location.pathname).toBe('/')
     }
   })
 
-  test('click on login redirects user to the login page', () => {
+  test('click on login redirects user to the login page', async () => {
     renderNavMenu(mockObj)
 
     store.dispatch(clearCurrentUser())
@@ -62,7 +63,7 @@ describe('NavMenu component tests', () => {
       const login = screen.getByRole('menuitem', { name: /login/i })
       expect(login).toBeInTheDocument()
 
-      fireEvent.click(login)
+      await userEvent.click(login)
       expect(window.location.pathname).toBe('/login')
     }
   })
@@ -77,7 +78,7 @@ describe('NavMenu component tests', () => {
       const profile = screen.getByRole('menuitem', { name: /profile/i })
       expect(profile).toBeInTheDocument()
 
-      fireEvent.click(profile)
+      userEvent.click(profile)
 
       setTimeout(() => {
         expect(window.location.pathname).toBe('/signup')

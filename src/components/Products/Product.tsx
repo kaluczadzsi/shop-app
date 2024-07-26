@@ -48,7 +48,7 @@ export const Product = ({ title, image, price, isonsale, id }: ProductProps) => 
             {t(`${updatedTitle}Description`)}
           </Typography>
         </CardContent>
-        <ProductRating productId={id} />
+        {user && <ProductRating productId={id} />}
         <Stack alignItems='center' justifyContent='space-between' direction='row' padding='8px 16px'>
           <Tooltip title={!user ? t('disabledPurchaseText') : ''} placement='top-start'>
             <Box>

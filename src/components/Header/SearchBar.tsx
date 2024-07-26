@@ -5,22 +5,44 @@ import { alpha, Box, Stack, useTheme } from '@mui/material'
 import InputBase from '@mui/material/InputBase'
 import { ChangeEvent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 export const SearchBar = () => {
   const { t } = useTranslation()
   const inputValue = useAppSelector((state) => state.search.inputValue)
   const dispatch = useAppDispatch()
-  const theme = useTheme()
   const location = useLocation()
+  const navigate = useNavigate()
+  const theme = useTheme()
 
-  useEffect(() => {
-    dispatch(setValue(''))
-  }, [location])
+  const params = new URLSearchParams(location.search)
+  const product = params.get('product')
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      dispatch(setValue(inputValue))
+    }
+  }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setValue(e.target.value))
   }
+
+  useEffect(() => {
+    if (product) {
+      dispatch(setValue(product))
+    }
+  }, [location.search, dispatch])
+
+  useEffect(() => {
+    if (inputValue) {
+      params.set('product', inputValue)
+    } else {
+      params.delete('product')
+    }
+
+    navigate({ search: params.toString() }, { replace: true })
+  }, [inputValue, navigate])
 
   return (
     <Box
@@ -56,7 +78,8 @@ export const SearchBar = () => {
         onChange={handleInputChange}
         value={inputValue}
         placeholder={t('searchPlaceholder')}
-        inputProps={{ 'aria-label': 'search' }}
+        inputProps={{ 'aria-label': 'search', name: 'search' }}
+        onKeyDown={handleKeyDown}
         sx={{
           color: 'inherit',
           padding: theme.spacing(1, 1, 1, 0),

@@ -1,5 +1,6 @@
 import { store } from '@/store/store'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router'
 import { Cart } from '../Cart'
@@ -26,27 +27,26 @@ describe('Cart component tests', () => {
   test('opens the CartDrawer when the CartButton is clicked', async () => {
     renderCart()
 
-    const { cartItems } = store.getState().cart
-
     const cartButton = screen.getByLabelText(OPEN_DRAWER_LABEL)
-    fireEvent.click(cartButton)
+    await userEvent.click(cartButton)
 
-    if (cartItems.length > 0) {
-      await waitFor(() => expect(screen.getByRole(DIALOG)).toBeInTheDocument())
-    }
+    waitFor(async () => {
+      expect(await screen.findByRole(DIALOG)).toBeInTheDocument()
+    })
   })
 
   test('closes the CartDrawer when the close button is clicked', async () => {
     renderCart()
 
-    const { cartItems } = store.getState().cart
+    const cartButton = screen.getByLabelText(OPEN_DRAWER_LABEL)
+    await userEvent.click(cartButton)
 
-    if (cartItems.length > 0) {
-      fireEvent.click(screen.getByRole('button', { name: /cart/i }))
-      await waitFor(() => expect(screen.getByRole(DIALOG)).toBeInTheDocument())
-
-      fireEvent.click(screen.getByRole('button', { name: /close/i }))
-      await waitFor(() => expect(screen.queryByRole(DIALOG)).not.toBeInTheDocument())
-    }
+    waitFor(async () => {
+      const drawer = await screen.findByLabelText('cart-drawer')
+      expect(await screen.findByRole(DIALOG)).not.toBeInTheDocument()
+      const closeIcon = await screen.findByLabelText('close-icon')
+      await userEvent.click(closeIcon)
+      expect(drawer).not.toBeInTheDocument()
+    })
   })
 })

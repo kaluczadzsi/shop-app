@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { TemporaryDrawer } from './TemporaryDrawer'
 
 const mockSetState = jest.fn()
@@ -11,7 +12,7 @@ describe('TemporaryDrawer', () => {
   test('should open drawer when IconButton is clicked', () => {
     const { getByLabelText } = render(<TemporaryDrawer />)
 
-    fireEvent.click(getByLabelText('open drawer'))
+    userEvent.click(getByLabelText('open drawer'))
 
     expect(mockSetState).toHaveBeenCalledWith(true)
   })

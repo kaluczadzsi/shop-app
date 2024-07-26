@@ -7,7 +7,7 @@ import { CartDrawerProps } from './types'
 
 export const CartDrawer = ({ isOpen, onClose, cart, isLoading }: CartDrawerProps) => {
   return (
-    <Drawer open={isOpen} onClose={onClose} anchor='right'>
+    <Drawer aria-label='cart-drawer' open={isOpen} onClose={onClose} anchor='right'>
       {isLoading ? (
         <CartItemSkeleton count={cart.length} />
       ) : (
@@ -27,7 +27,11 @@ export const CartDrawer = ({ isOpen, onClose, cart, isLoading }: CartDrawerProps
             maxWidth='31.25rem'
             padding='1rem'
           >
-            <Close sx={{ position: 'absolute', right: 16, cursor: 'pointer', zIndex: 10 }} onClick={onClose} />
+            <Close
+              aria-label='close-icon'
+              sx={{ position: 'absolute', right: 16, cursor: 'pointer', zIndex: 10 }}
+              onClick={onClose}
+            />
             <Stack marginTop='2rem' gap={2}>
               {cart.map((cartItem) => (
                 <CartItem key={cartItem.id} {...cartItem} />

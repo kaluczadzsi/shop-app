@@ -7,4 +7,5 @@ export interface User {
   accessToken?: string
   lang?: string
   ratings?: { [productId: number]: number }
+  image?: string | null
 }

@@ -1,5 +1,7 @@
 import { store } from '@/store/store'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { act } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { SearchBar } from '../SearchBar'
@@ -22,11 +24,17 @@ describe('SearchBar component tests', () => {
     expect(inputElement.value).toBe('')
   })
 
-  test('allows user to type', () => {
+  test('allows user to type', async () => {
     renderSearchBar()
 
     const inputElement = screen.getByPlaceholderText('searchPlaceholder') as HTMLInputElement
-    fireEvent.change(inputElement, { target: { value: 'test' } })
-    expect(inputElement.value).toBe('test')
+
+    await act(async () => {
+      await userEvent.type(inputElement, 'test')
+    })
+
+    await waitFor(() => {
+      expect(inputElement.value).toBe('test')
+    })
   })
 })

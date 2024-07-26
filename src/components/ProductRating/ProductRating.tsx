@@ -1,20 +1,36 @@
-import { patchUserThunk } from '@/features/currentUser/patchUserThunk'
+import { fetchRatingsThunk } from '@/features/rating/fetchRatingsThunk'
+import { handleRatingThunk } from '@/features/rating/handleRatingThunk'
+import { Rating as RatingProp } from '@/features/rating/types'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Rating, Stack, Typography } from '@mui/material'
 import { green, red, yellow } from '@mui/material/colors'
 import { useEffect, useState } from 'react'
-import { User } from '../types'
 import { Labels, ProductRatingProps } from './types'
 
 export const ProductRating = ({ productId }: ProductRatingProps) => {
-  const dispatch = useAppDispatch()
   const { user } = useAppSelector((state) => state.currentUser)
-  const rating = user?.ratings?.[productId] || 3
-  const [value, setValue] = useState<number | null>(rating)
+  const { ratings } = useAppSelector((state) => state.rating)
+  const rating = ratings.find((r: RatingProp) => r.id === productId)
+  const [value, setValue] = useState<number | null>(rating?.value ?? 1)
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    setValue(rating)
+    dispatch(fetchRatingsThunk())
+  }, [])
+
+  useEffect(() => {
+    if (rating) {
+      setValue(rating.value)
+    }
   }, [rating])
+
+  const handleRatingChange = async (newValue: number | null) => {
+    if (newValue !== null) {
+      setValue(newValue)
+      dispatch(handleRatingThunk({ id: productId, value: newValue }))
+    }
+  }
 
   const getLabelText = (starValue: number) => {
     return starValue ? Labels[starValue] : Labels[2]
@@ -35,30 +51,13 @@ export const ProductRating = ({ productId }: ProductRatingProps) => {
     return color
   }
 
-  const handleRatingChange = (newValue: number | null) => {
-    if (!user) return
-
-    const updatedUser: User = {
-      ...user,
-      ratings: {
-        ...(user.ratings || {}),
-        [productId]: newValue !== null ? newValue : 0
-      }
-    }
-
-    dispatch(patchUserThunk(updatedUser))
-  }
-
   return (
     <Stack marginTop='auto' paddingInline={2} direction='row' alignItems='center' gap={2}>
       <Rating
         disabled={!user}
-        onChange={(_, newValue) => {
-          setValue(newValue)
-          handleRatingChange(newValue)
-        }}
+        onChange={(_, newValue) => handleRatingChange(newValue)}
         value={value}
-        name='size-medium'
+        name={`${productId}-rating`}
         defaultValue={1}
       />
       <Typography fontWeight='bold' color={getRatingColor(value || 1)}>

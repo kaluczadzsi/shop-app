@@ -3,7 +3,6 @@ import { EMAIL_REGEX, USERNAME_REGEX } from '@/constants'
 
 export const schema = yup.object().shape({
   username: yup
-    // prettier-ignore
     .string()
     .required('Username is a required field')
     .min(3, 'Username must be at least 3 characters')

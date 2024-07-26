@@ -4,8 +4,9 @@ import { fulfilledHandler, pendingHandler, rejectedHandler } from '@/constants/s
 import { createSlice } from '@reduxjs/toolkit'
 import { postUserThunk } from './postUserThunk'
 import { CurrentUserState } from './types'
+import { updateUserImageThunk } from './updateUserImageThunk'
 import { updateUserLangThunk } from './updateUserLangThunk'
-import { patchUserThunk } from './patchUserThunk'
+import { updateUsernameThunk } from './updateUsernameThunk'
 
 const storedUser = localStorage.getItem('user')
 const initialUser: User | null = storedUser ? (JSON.parse(storedUser) as User) : null
@@ -38,11 +39,18 @@ export const currentUserSlice = createSlice({
       state.user = action.payload
     })
     builder.addCase(updateUserLangThunk.rejected, rejectedHandler)
-    builder.addCase(patchUserThunk.pending, pendingHandler)
-    builder.addCase(patchUserThunk.fulfilled, (state, action) => {
+    builder.addCase(updateUserImageThunk.pending, pendingHandler)
+    builder.addCase(updateUserImageThunk.fulfilled, (state, action) => {
       fulfilledHandler(state)
       state.user = action.payload
     })
+    builder.addCase(updateUserImageThunk.rejected, rejectedHandler)
+    builder.addCase(updateUsernameThunk.pending, pendingHandler)
+    builder.addCase(updateUsernameThunk.fulfilled, (state, action) => {
+      fulfilledHandler(state)
+      state.user = action.payload
+    })
+    builder.addCase(updateUsernameThunk.rejected, rejectedHandler)
   }
 })
 

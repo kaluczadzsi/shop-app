@@ -1,10 +1,16 @@
+import { useAppSelector } from '@/store/hooks'
 import { store } from '@/store/store'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router'
 import { CartButton } from '../CartButton'
 
-const renderCartButton = (mockFn: () => void) => {
+const mockFn = jest.fn()
+const cartButton = screen.getByLabelText(/open drawer/i)
+const tooltip = 'tooltip'
+
+const renderCartButton = () => {
   return render(
     <Provider store={store}>
       <Router>
@@ -14,28 +20,14 @@ const renderCartButton = (mockFn: () => void) => {
   )
 }
 
-const mockFn = jest.fn()
-
 describe('CartButton component tests', () => {
-  test('tooltip opens on hover', async () => {
-    renderCartButton(mockFn)
-
-    const cartButton = screen.getByLabelText(/open drawer/i)
-    fireEvent.mouseEnter(cartButton)
-
-    waitFor(() => {
-      expect(screen.findByText('tooltip')).toBeInTheDocument()
-    })
-  })
-
   test('tooltip text is equal to Cart when it has items', async () => {
-    renderCartButton(mockFn)
+    renderCartButton()
 
-    const cartButton = screen.getByLabelText(/open drawer/i)
-    fireEvent.mouseEnter(cartButton)
+    userEvent.hover(cartButton)
 
     waitFor(() => {
-      expect(screen.findByText('tooltip')).toBeInTheDocument()
+      expect(screen.findByText(tooltip)).toBeInTheDocument()
 
       if (store.getState().cart.cartItems.length) {
         expect(screen.findByText(/'cart'/i)).toBeInTheDocument()
@@ -44,28 +36,24 @@ describe('CartButton component tests', () => {
   })
 
   test('tooltip text is equal to There are no items in your cart when it has no items', async () => {
-    renderCartButton(mockFn)
+    renderCartButton()
 
-    const cardButton = screen.getByLabelText(/open drawer/i)
-    fireEvent.mouseEnter(cardButton)
+    userEvent.hover(cartButton)
 
     waitFor(() => {
-      expect(screen.findByText('tooltip')).toBeInTheDocument()
+      expect(screen.findByText(tooltip)).toBeInTheDocument()
 
-      if (!store.getState().cart.cartItems.length) {
-        expect(screen.findByText(/'there are no items in your cart when it has no items'/i)).toBeInTheDocument()
-      }
+      const mockUseAppSelector = useAppSelector as jest.MockedFunction<typeof useAppSelector>
+      mockUseAppSelector.mockReturnValue({ cartItems: [{ id: 1, name: 'cart item' }] })
+
+      expect(screen.findByText(/'there are no items in your cart when it has no items'/i)).toBeInTheDocument()
     })
   })
 
   test('when button clicked it calls the onClick function', async () => {
-    renderCartButton(mockFn)
+    renderCartButton()
 
-    const cardButton = screen.getByLabelText(/open drawer/i)
-    fireEvent.mouseEnter(cardButton)
-
-    if (store.getState().cart.cartItems.length) {
-      expect(mockFn).toHaveBeenCalled()
-    }
+    userEvent.hover(cartButton)
+    expect(mockFn).toHaveBeenCalled()
   })
 })

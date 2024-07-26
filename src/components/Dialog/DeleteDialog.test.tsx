@@ -1,5 +1,6 @@
 import { store } from '@/store/store'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router'
 import { DeleteDialog } from './DeleteDialog'
@@ -37,17 +38,17 @@ describe('DeleteDialog component tests', () => {
     expect(screen.getByText('description')).toBeInTheDocument()
   })
 
-  test('calls setIsOpen with false when the deny button is clicked', () => {
+  test('calls setIsOpen with false when the deny button is clicked', async () => {
     renderDeleteDialog(mockObj)
 
-    fireEvent.click(screen.getByText('deny'))
+    await userEvent.click(screen.getByText('deny'))
     expect(mockFn).toHaveBeenCalledWith(false)
   })
 
-  test('calls handleDelete when the confirm button is clicked', () => {
+  test('calls handleDelete when the confirm button is clicked', async () => {
     renderDeleteDialog(mockObj)
 
-    fireEvent.click(screen.getByText('confirm'))
+    await userEvent.click(screen.getByText('confirm'))
     expect(mockFn).toHaveBeenCalled()
   })
 })

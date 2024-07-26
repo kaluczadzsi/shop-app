@@ -84,6 +84,15 @@ export const english = {
       }
     },
     confirm: 'Confirm',
-    deny: 'Deny'
+    deny: 'Deny',
+    changeProfilePicture: 'Change profile picture',
+    changeUsername: 'Change username',
+    enterNewUsername: 'Enter a new username (3 to 18 characters)',
+    profileNameDialogTitle: 'Change username',
+    usernameLengthError: 'The new username must be at least 3 characters long.',
+    usernameTooShort: 'username is too short',
+    usernameTooLong: 'username is too long',
+    newUserName: 'New username',
+    btnChange: 'change'
   }
 }

@@ -5,6 +5,7 @@ import userReducer from '@/features/user/userSlice'
 import themeReducer from '@/features/theme/themeSlice'
 import cartReducer from '@/features/cart/cartSlice'
 import errorReducer from '@/features/error/errorSlice'
+import ratingReducer from '@/features/rating/ratingSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     currentUser: currentUserReducer,
     theme: themeReducer,
     cart: cartReducer,
-    error: errorReducer
+    error: errorReducer,
+    rating: ratingReducer
   }
 })

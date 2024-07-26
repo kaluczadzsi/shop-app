@@ -1,5 +1,6 @@
 import { store } from '@/store/store'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { LanguageMenu } from '../LanguageMenu'
@@ -19,11 +20,11 @@ describe('LanguageMenu component tests', () => {
     jest.clearAllMocks()
   })
 
-  test('handleClick sets anchorEl correctly', () => {
+  test('handleClick sets anchorEl correctly', async () => {
     renderLanguageMenu()
 
     const button = screen.getByLabelText('language-button')
-    fireEvent.click(button)
+    await userEvent.click(button)
 
     expect(button).toHaveAttribute('aria-expanded', 'true')
   })
@@ -32,15 +33,15 @@ describe('LanguageMenu component tests', () => {
     renderLanguageMenu()
 
     const button = screen.getByLabelText('language-button')
-    fireEvent.click(button)
+    await userEvent.click(button)
 
-    const menu = screen.queryByRole('menu')
-    fireEvent.click(button)
+    const menu = await screen.findByRole('menu')
+    await userEvent.click(button)
 
     expect(menu).toBeInTheDocument()
 
     setTimeout(() => {
-      fireEvent.click(button)
+      userEvent.click(button)
       expect(menu).not.toBeInTheDocument()
     }, 500)
   })
@@ -50,7 +51,7 @@ describe('LanguageMenu component tests', () => {
 
     const button = screen.getByLabelText('language-button')
 
-    fireEvent.mouseOver(button)
+    userEvent.hover(button)
 
     setTimeout(() => {
       const tooltip = screen.queryByRole('tooltip')
@@ -64,19 +65,19 @@ describe('LanguageMenu component tests', () => {
     renderLanguageMenu()
 
     const button = screen.getByLabelText('language-button')
-    fireEvent.click(button)
+    await userEvent.click(button)
 
     expect(screen.getByRole('menu')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('menuitem', { name: 'UK' }))
+    userEvent.click(screen.getByRole('menuitem', { name: 'UK' }))
 
     if (user) {
       await waitFor(() => expect(user?.lang).toEqual('uk'))
     }
 
-    fireEvent.click(button)
+    userEvent.click(button)
 
     expect(screen.getByRole('menu')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('menuitem', { name: 'EN' }))
+    userEvent.click(screen.getByRole('menuitem', { name: 'EN' }))
 
     if (user) {
       await waitFor(() => expect(user?.lang).toEqual('en'))
