@@ -134,6 +134,36 @@
       "description": "Take control of your gaming experience with the Xbox controller. Designed for precision and comfort, our controller offers responsive gameplay and intuitive controls, putting you in the center of the action.",
       "price": 84,
       "quantity": 1
+    },
+    {
+      "id": "1",
+      "category": "household",
+      "title": "brush",
+      "image": "/products/brush.jpg",
+      "description": "The perfect choice for anyone looking to add a splash of color to their outdoor space. Whether you're sprucing up your garden or giving your property a fresh new look, our fence paint offers exceptional coverage and long-lasting durability.",
+      "isonsale": true,
+      "price": 125,
+      "quantity": 1
+    },
+    {
+      "id": "4",
+      "category": "furniture",
+      "title": "chair",
+      "image": "/products/chair.jpg",
+      "description": "Bring style and comfort into your home with our modern chair. Crafted with precision and attention to detail, our chair combines sleek design with plush cushioning to create the perfect seating experience. Whether you're enjoying a cozy evening by the fireplace or hosting guests for dinner, our chair provides the ideal balance of elegance and relaxation.",
+      "isonsale": true,
+      "price": 97,
+      "quantity": 1
+    },
+    {
+      "id": "7",
+      "category": "tv",
+      "title": "samsung tv",
+      "image": "/products/television.jpg",
+      "description": "Elevate your home entertainment experience with the Samsung TV. Immerse yourself in stunning visuals and crystal-clear sound with our state-of-the-art television.",
+      "isonsale": true,
+      "price": 499,
+      "quantity": 1
     }
   ]
 }
