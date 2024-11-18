@@ -39,4 +39,4 @@ To run the project you need to do this steps bellow:
     4. npm run dev
     5. npm start ( run JSON server with auth )
 
-    if something not works above, you should try: npm install -g json-server
+    If something doesn't work above, you should try: npm install -g json-server.
