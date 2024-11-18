@@ -23,3 +23,4 @@ Used technologies:
 - Axios
 - Yup
 - Jest + React Testing Library
+- Emotion, styled components
