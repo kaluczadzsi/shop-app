@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test": "jest",
-    "clear_jest": "jest --clearCache"
+    "clear_jest": "jest --clearCache",
+    "start": "json-server --watch mockData/db.json -m ./node_modules/json-server-auth"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
