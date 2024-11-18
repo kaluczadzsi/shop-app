@@ -22,3 +22,4 @@ Used technologies:
 - Husky
 - Axios
 - Yup
+- Jest + React Testing Library
