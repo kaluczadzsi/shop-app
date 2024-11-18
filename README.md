@@ -1,7 +1,5 @@
 # Summary:
 
-# Summary:
-
 Shop application
 
 An online shopping platform offering a diverse range of products.
